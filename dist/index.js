@@ -29071,7 +29071,7 @@ async function getJobStatuses(octokit, owner, repo) {
             repo,
             run_id: ran.id
         });
-        core.info(`jobs: ${JSON.stringify(jobs)}`);
+        core.info(`jobs: ${JSON.stringify(jobs.data.jobs, null, 2)}`);
         for (const job of jobs.data.jobs) {
             jobStatuses.totalJobs.push(job.name);
             if (job.conclusion === 'success') {
