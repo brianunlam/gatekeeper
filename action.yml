@@ -1,24 +1,30 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
+name: 'Merge Gatekeeper'
+description: 'A GitHub Action to check the status of other workflows'
 author: 'Your name or organization here'
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'heart'
-  color: 'red'
+  icon: 'check-circle'
+  color: 'green'
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  repo-token:
+    description: 'GitHub token for accessing the repository data. Typically use secrets.GITHUB_TOKEN.'
     required: true
-    default: '1000'
 
-# Define your outputs here.
+  ignore-actions:
+    description: 'List of GitHub Action names to ignore, separated by commas.'
+    required: false
+    default: ''
+
+  interval:
+    description: 'Interval in milliseconds to wait before checking the workflow statuses again.'
+    required: false
+    default: '60000' # Default to 60 seconds
+
 outputs:
-  time:
-    description: 'Your output description here'
+  status:
+    description: 'The status of the workflow checks.'
 
 runs:
-  using: node20
-  main: dist/index.js
+  using: 'node20'
+  main: 'dist/index.js'
