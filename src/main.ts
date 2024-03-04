@@ -35,7 +35,7 @@ export async function run(): Promise<void> {
 
     let allSuccessful = false
     while (!allSuccessful) {
-      allSuccessful = await checkWorkflows(octokit, owner, repo, ignoreActions))
+      allSuccessful = await checkWorkflows(octokit, owner, repo, ignoreActions)
       if (!allSuccessful) {
         core.info('Not all workflows are successful. Waiting...')
         await new Promise(resolve => setTimeout(resolve, interval))

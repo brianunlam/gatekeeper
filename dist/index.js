@@ -29014,6 +29014,8 @@ async function checkWorkflows(octokit, owner, repo, ignoreActions) {
         repo,
         status: 'completed'
     });
+    core.info(`Found ${workflows.data.workflow_runs.length} workflows`);
+    core.info(JSON.stringify(workflows.data.workflow_runs));
     return workflows.data.workflow_runs.every(ran => {
         return (ignoreActions.includes(ran.name || '') || ran.conclusion === 'success');
     });
