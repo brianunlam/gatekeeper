@@ -54,5 +54,5 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           interval: 2000
 
-      - name: Print Output
-        run: echo "${{ steps.test-action.outputs.time }}"
+      # - name: Print Output
+      #   run: echo "${{ steps.test-action.outputs.time }}"
