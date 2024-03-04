@@ -12,7 +12,8 @@ async function checkWorkflows(
     repo,
     status: 'completed'
   })
-
+  core.info(`Found ${workflows.data.workflow_runs.length} workflows`)
+  core.info(JSON.stringify(workflows.data.workflow_runs))
   return workflows.data.workflow_runs.every(ran => {
     return (
       ignoreActions.includes(ran.name || '') || ran.conclusion === 'success'
@@ -34,7 +35,7 @@ export async function run(): Promise<void> {
 
     let allSuccessful = false
     while (!allSuccessful) {
-      allSuccessful = await checkWorkflows(octokit, owner, repo, ignoreActions)
+      allSuccessful = await checkWorkflows(octokit, owner, repo, ignoreActions))
       if (!allSuccessful) {
         core.info('Not all workflows are successful. Waiting...')
         await new Promise(resolve => setTimeout(resolve, interval))
