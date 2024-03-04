@@ -29065,11 +29065,11 @@ async function getJobStatuses(octokit, owner, repo) {
         status: 'completed'
     });
     const jobStatuses = new JobStatus([], [], [], []);
-    for (const run of runs.data.workflow_runs) {
+    for (const ran of runs.data.workflow_runs) {
         const jobs = await octokit.rest.actions.listJobsForWorkflowRun({
             owner,
             repo,
-            run_id: run.id
+            run_id: ran.id
         });
         for (const job of jobs.data.jobs) {
             jobStatuses.totalJobs.push(job.name);
