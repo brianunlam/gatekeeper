@@ -52,7 +52,7 @@ jobs:
         uses: ./
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          milliseconds: 2000
+          interval: 2000
 
       - name: Print Output
         run: echo "${{ steps.test-action.outputs.time }}"
