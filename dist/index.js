@@ -29059,20 +29059,19 @@ ${this.prettyPrintJobList(this.totalJobs)}
     }
 }
 async function getJobStatuses(octokit, owner, repo) {
-    const runs = await octokit.rest.actions.listWorkflowRunsForRepo({
+    const currentRunId = process.env['GITHUB_RUN_ID'];
+    if (!currentRunId) {
+        throw new Error('GITHUB_RUN_ID environment variable is not set.');
+    }
+    // Log the current run ID
+    core.info(`Current Workflow Run ID: ${currentRunId}`);
+    // Fetch and log the jobs for the current workflow run
+    const jobs = await octokit.rest.actions.listJobsForWorkflowRun({
         owner,
         repo,
-        status: 'completed'
+        run_id: parseInt(currentRunId, 10)
     });
-    core.info(`runs: ${JSON.stringify(runs.data.workflow_runs, null, 2)}`);
-    // for (const ran of runs.data.workflow_runs) {
-    //   const jobs = await octokit.rest.actions.listJobsForWorkflowRun({
-    //     owner,
-    //     repo,
-    //     run_id: ran.id
-    //   })
-    //   core.info(`jobs: ${JSON.stringify(jobs.data.jobs, null, 2)}`)
-    // }
+    core.info(`jobs for current run: ${JSON.stringify(jobs.data.jobs, null, 2)}`);
     return new JobStatus([], [], [], []);
 }
 async function run() {
