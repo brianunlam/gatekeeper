@@ -29064,26 +29064,16 @@ async function getJobStatuses(octokit, owner, repo) {
         repo,
         status: 'completed'
     });
-    const jobStatuses = new JobStatus([], [], [], []);
-    for (const ran of runs.data.workflow_runs) {
-        const jobs = await octokit.rest.actions.listJobsForWorkflowRun({
-            owner,
-            repo,
-            run_id: ran.id
-        });
-        core.info(`jobs: ${JSON.stringify(jobs.data.jobs, null, 2)}`);
-        for (const job of jobs.data.jobs) {
-            jobStatuses.totalJobs.push(job.name);
-            if (job.conclusion === 'success') {
-                jobStatuses.completeJobs.push(job.name);
-            }
-            else if (job.conclusion !== 'skipped') {
-                // Assuming 'skipped' jobs are ignored
-                jobStatuses.errJobs.push(job.name);
-            }
-        }
-    }
-    return jobStatuses;
+    core.info(`runs: ${JSON.stringify(runs.data.workflow_runs, null, 2)}`);
+    // for (const ran of runs.data.workflow_runs) {
+    //   const jobs = await octokit.rest.actions.listJobsForWorkflowRun({
+    //     owner,
+    //     repo,
+    //     run_id: ran.id
+    //   })
+    //   core.info(`jobs: ${JSON.stringify(jobs.data.jobs, null, 2)}`)
+    // }
+    return new JobStatus([], [], [], []);
 }
 async function run() {
     try {
