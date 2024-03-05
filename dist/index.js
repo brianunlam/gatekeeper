@@ -29071,7 +29071,9 @@ async function getJobStatuses(octokit, owner, repo) {
         repo,
         run_id: parseInt(currentRunId, 10)
     });
-    core.info(`jobs for current run: ${JSON.stringify(jobs.data.jobs, null, 2)}`);
+    for (const job of jobs.data.jobs) {
+        core.info(`Job: ${job.name}, Status: ${job.status}, Conclusion: ${job.conclusion}`);
+    }
     return new JobStatus([], [], [], []);
 }
 async function run() {
